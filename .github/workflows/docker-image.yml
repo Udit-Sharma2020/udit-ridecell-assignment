@@ -25,12 +25,10 @@ jobs:
     #this can be done using a custom helm chart but i'll use a simple kubectl deployment command
       run: | 
       export GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-4)
-      gcloud auth activate-service-account --key-file "${{ secrets.GCP_SA_KEY }}"  
-    #used a gcp-service-account.json file to login into gcp acc.
+      gcloud auth activate-service-account --key-file "${{ secrets.GCP_SA_KEY }}" 
       gcloud config set project "${{ env.GCP_PROJECT }}" 
       gcloud config set compute/zone europe-west4-a
       gcloud container clusters get-credentials ${CLUSTER_NAME} --region europe-west4 --project "${{ env.GCP_PROJECT }}"
-    #this above command is used to save the gke context into kubeconfig file of the system that runs the command
       kubectl create deployment ${DEPLOYMENT_NAME} --image ${IMAGE_NAME}:${GITHUB_SHA_SHORT} -n ${NAMESPACE}
 
 
