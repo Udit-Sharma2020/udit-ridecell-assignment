@@ -10,8 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build and push Docker image
-      env:
-        GITHUB_SHA_SHORT: "${{ $(echo $GITHUB_SHA | cut -c 1-6) }}"
       run: | 
         echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u tech4mud --password-stdin
         export GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-4)
