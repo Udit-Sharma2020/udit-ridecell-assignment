@@ -12,7 +12,7 @@ jobs:
     - name: Build and push Docker image
       run: | 
         echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u tech4mud --password-stdin
-        docker image build -t "${{ env.IMAGE_NAME }}":"${{ github.GITHUB_SHA }}" .
+        docker image build -t "${{ env.IMAGE_NAME }}":latest .
         docker push "${{ env.IMAGE_NAME }}":"${{ github.GITHUB_SHA }}"
       
 
@@ -22,7 +22,7 @@ jobs:
 
 
       #       - gcloud auth activate-service-account --key-file ${GCP_SA_KEY}
-      # - gcloud config set project eyekloud
+      # - gcloud config set project eyekloud "${{ github.GITHUB_SHA }}"
       # - gcloud config set compute/zone europe-west4-a
       # - gcloud container clusters get-credentials eyekloud-prod-cluster --region europe-west4 --project eyekloud
       # - kubectl set image deployment/${DEPLOYMENT_NAME_PROD} eyekloud-frontend=${CONTAINER_IMAGE_PROD} -n ${NAMESPACE_PROD}
