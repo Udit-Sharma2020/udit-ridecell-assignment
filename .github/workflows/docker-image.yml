@@ -1,18 +1,31 @@
-name: Docker Image CI
+name: Build, Push Docker Image
 
 on:
   push:
     branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
-
+env: 
+  IMAGE_NAME: udit-ridecell-image
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
+    - uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build -t ${{ env.IMAGE_NAME }}:${{ github.GITHUB_SHA }}
+    - name: Push image to Container Registry
+      run: docker push ${{ env.IMAGE_NAME }}:${{ github.GITHUB_SHA }}
+
+
+
+
+
+
+      #       - gcloud auth activate-service-account --key-file ${GCP_SA_KEY}
+      # - gcloud config set project eyekloud
+      # - gcloud config set compute/zone europe-west4-a
+      # - gcloud container clusters get-credentials eyekloud-prod-cluster --region europe-west4 --project eyekloud
+      # - kubectl set image deployment/${DEPLOYMENT_NAME_PROD} eyekloud-frontend=${CONTAINER_IMAGE_PROD} -n ${NAMESPACE_PROD}
+
