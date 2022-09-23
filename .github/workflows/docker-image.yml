@@ -8,7 +8,8 @@ env:
 jobs:
   build-image: #phase 1
     runs-on: ubuntu-latest
-    steps:
+    steps: 
+    - use: actions/checkout@v3
     - name: Build and push Docker image
       run: | 
         echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u tech4mud --password-stdin
