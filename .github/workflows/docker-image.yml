@@ -27,6 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-image 
     steps: 
+    - uses: google-github-actions/setup-gcloud@v0
     - name: Deploy On GKE
     #this can be done using a custom helm chart but i'll use a simple kubectl deployment command.
       run: | 
