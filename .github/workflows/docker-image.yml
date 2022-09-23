@@ -17,9 +17,7 @@ jobs:
     - name: Build and push Docker image
       run: | 
         echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u tech4mud --password-stdin
-      #creating a variable with commit-sha upto 4 charcters.
         export GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-4)
-      #build and push image to docker container registery.
         docker image build -t "${{ env.IMAGE_NAME }}":"$GITHUB_SHA_SHORT" .
         docker push "${{ env.IMAGE_NAME }}":"$GITHUB_SHA_SHORT"
 
@@ -33,12 +31,9 @@ jobs:
     #this can be done using a custom helm chart but i'll use a simple kubectl deployment command.
       run: | 
         export GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-4)
-      #using service-account json file to login to gcp account.
         gcloud auth activate-service-account --key-file "${{ secrets.GCP_SA_KEY }}" 
-      #Setup project and region.
         gcloud config set project "${{ env.GCP_PROJECT }}" 
         gcloud config set compute/zone europe-west4-a
-      #this command will setup context for gke cluster in kubeconfig in runner.
         gcloud container clusters get-credentials ${{ env.CLUSTER_NAME }} --region europe-west4 --project "${{ env.GCP_PROJECT }}"
         kubectl create deployment ${{ env.DEPLOYMENT_NAME }} --image ${{ env.IMAGE_NAME }}:${GITHUB_SHA_SHORT} -n ${{ env.NAMESPACE }}
 
