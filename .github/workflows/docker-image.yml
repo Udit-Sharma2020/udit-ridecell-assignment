@@ -32,6 +32,7 @@ jobs:
     #this can be done using a custom helm chart but i'll use a simple kubectl deployment command.
       run: | 
         export GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-4)
+        gloud --help
         gcloud auth activate-service-account --key-file "${{ secrets.GCP_SA_KEY }}" 
         gcloud config set project "${{ env.GCP_PROJECT }}" 
         gcloud config set compute/zone europe-west4-a
