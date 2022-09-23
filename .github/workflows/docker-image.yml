@@ -11,7 +11,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: Build and push Docker image
       run: | 
-        echo "$${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u tech4mud --password-stdin
+        echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u tech4mud --password-stdin
         docker build -t ${{ env.IMAGE_NAME }}:${{ github.GITHUB_SHA }}
         docker push ${{ env.IMAGE_NAME }}:${{ github.GITHUB_SHA }}
       
