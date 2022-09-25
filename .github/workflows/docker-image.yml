@@ -37,7 +37,7 @@ jobs:
         name: "gcp-key.json"
         json: ${{ secrets.GCP_SA_KEY }}
     - name: Deploy On GKE
-      # if: contains(github.event.head_commit.message, 'BUILD_CONTAINER_IMAGE')
+      if: contains(github.event.head_commit.message, 'BUILD_CONTAINER_IMAGE')
     #this can be done using a custom helm chart but i'll use a simple kubectl deployment command. "${{ secrets.GCP_SA_KEY }}" 
       run: | 
         export GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-4)
@@ -45,23 +45,5 @@ jobs:
         gcloud config set project "${{ env.GCP_PROJECT }}"
         gcloud config set compute/zone us-east4-a
         gcloud container clusters get-credentials ${{ env.CLUSTER_NAME }} --region us-east4-a --project "${{ env.GCP_PROJECT }}"
-        kubectl get namespace 
-        
-      # touch .env
-      # echo GCP_SA_KEY=${{ secrets.GCP_SA_KEY }} >> .env
-      # cat .env
-      #  
-      # gcloud config set compute/zone europe-west4-a
-      # 
-      #   
-    #kubectl create deployment ${{ env.DEPLOYMENT_NAME }} --image ${{ env.IMAGE_NAME }}:${GITHUB_SHA_SHORT} -n ${{ env.NAMESPACE }}
-
-
-
-
-
-
-
-
+        kubectl create deployment ${{ env.DEPLOYMENT_NAME }} --image ${{ env.IMAGE_NAME }}:${GITHUB_SHA_SHORT} -n ${{ env.NAMESPACE }}
       
-
