@@ -5,7 +5,7 @@ on:
     - master
 env: 
   IMAGE_NAME: tech4mud/udit-ridecell-image
-  GCP_PROJECT: ridecell-project
+  GCP_PROJECT: gridcamp-studio #ridecell-project
   CLUSTER_NAME: ridecell-gke
   DEPLOYMENT_NAME: ridecell-deployment
   NAMESPACE: ridecell
@@ -45,13 +45,18 @@ jobs:
         ls -la 
         cat ./gcp-key.json
         gcloud auth activate-service-account --key-file gcp-key.json
+        gcloud config set project "${{ env.GCP_PROJECT }}"
+        gcloud config set compute/zone us-east4-a
+        gcloud container clusters get-credentials ${{ env.CLUSTER_NAME }} --region europe-west4 --project "${{ env.GCP_PROJECT }}"
+        kubectl get namespace 
+        
       # touch .env
       # echo GCP_SA_KEY=${{ secrets.GCP_SA_KEY }} >> .env
       # cat .env
-      # gcloud config set project "${{ env.GCP_PROJECT }}" 
+      #  
       # gcloud config set compute/zone europe-west4-a
-      # gcloud container clusters get-credentials ${{ env.CLUSTER_NAME }} --region europe-west4 --project "${{ env.GCP_PROJECT }}"
-      # kubectl get namespace   
+      # 
+      #   
     #kubectl create deployment ${{ env.DEPLOYMENT_NAME }} --image ${{ env.IMAGE_NAME }}:${GITHUB_SHA_SHORT} -n ${{ env.NAMESPACE }}
 
 
