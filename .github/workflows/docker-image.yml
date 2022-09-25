@@ -44,7 +44,7 @@ jobs:
         cat gcp-key.json
         ls -la 
         cat ./gcp-key.json
-      # gcloud auth activate-service-account --key-file gcp-key.json
+        gcloud auth activate-service-account --key-file gcp-key.json
       # touch .env
       # echo GCP_SA_KEY=${{ secrets.GCP_SA_KEY }} >> .env
       # cat .env
