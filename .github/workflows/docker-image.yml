@@ -38,15 +38,16 @@ jobs:
         json: ${{ secrets.CYPRESS_CONFIG_JSON }}
     - name: Deploy On GKE
       # if: contains(github.event.head_commit.message, 'BUILD_CONTAINER_IMAGE')
-    #this can be done using a custom helm chart but i'll use a simple kubectl deployment command.
+    #this can be done using a custom helm chart but i'll use a simple kubectl deployment command. "${{ secrets.GCP_SA_KEY }}" 
       run: | 
         export GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-4)
         cat gcp-key.json
-        gcloud auth activate-service-account --key-file "${{ secrets.GCP_SA_KEY }}" 
+        gcloud auth activate-service-account --key-file gcp-key.json
         gcloud config set project "${{ env.GCP_PROJECT }}" 
         gcloud config set compute/zone europe-west4-a
         gcloud container clusters get-credentials ${{ env.CLUSTER_NAME }} --region europe-west4 --project "${{ env.GCP_PROJECT }}"
-        kubectl create deployment ${{ env.DEPLOYMENT_NAME }} --image ${{ env.IMAGE_NAME }}:${GITHUB_SHA_SHORT} -n ${{ env.NAMESPACE }}
+        kubectl get namespace   
+    #kubectl create deployment ${{ env.DEPLOYMENT_NAME }} --image ${{ env.IMAGE_NAME }}:${GITHUB_SHA_SHORT} -n ${{ env.NAMESPACE }}
 
 
 
