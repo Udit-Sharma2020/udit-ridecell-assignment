@@ -42,6 +42,7 @@ jobs:
       run: | 
         export GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-4)
         cat gcp-key.json
+        ls -la 
       # gcloud auth activate-service-account --key-file gcp-key.json
       # touch .env
       # echo GCP_SA_KEY=${{ secrets.GCP_SA_KEY }} >> .env
