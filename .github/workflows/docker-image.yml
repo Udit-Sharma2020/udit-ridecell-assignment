@@ -41,9 +41,6 @@ jobs:
     #this can be done using a custom helm chart but i'll use a simple kubectl deployment command. "${{ secrets.GCP_SA_KEY }}" 
       run: | 
         export GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-4)
-        cat gcp-key.json
-        ls -la 
-        cat ./gcp-key.json
         gcloud auth activate-service-account --key-file gcp-key.json
         gcloud config set project "${{ env.GCP_PROJECT }}"
         gcloud config set compute/zone us-east4-a
