@@ -35,7 +35,7 @@ jobs:
       uses: jsdaniell/create-json@1.1.2
       with:
         name: "gcp-key.json"
-        json: ${{ secrets.CYPRESS_CONFIG_JSON }}
+        json: ${{ secrets.GCP_SA_KEY }}
     - name: Deploy On GKE
       # if: contains(github.event.head_commit.message, 'BUILD_CONTAINER_IMAGE')
     #this can be done using a custom helm chart but i'll use a simple kubectl deployment command. "${{ secrets.GCP_SA_KEY }}" 
@@ -43,6 +43,9 @@ jobs:
         export GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-4)
         cat gcp-key.json
         gcloud auth activate-service-account --key-file gcp-key.json
+        touch .env
+        echo GCP_SA_KEY=${{ secrets.GCP_SA_KEY }} >> .env
+        cat .env
         gcloud config set project "${{ env.GCP_PROJECT }}" 
         gcloud config set compute/zone europe-west4-a
         gcloud container clusters get-credentials ${{ env.CLUSTER_NAME }} --region europe-west4 --project "${{ env.GCP_PROJECT }}"
