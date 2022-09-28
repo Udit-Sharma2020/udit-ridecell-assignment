@@ -19,3 +19,4 @@ Github Action Workflow Assignment
     - When commit message contains `BUILD_CONTAINER_IMAGE` string.
 - Share the github repo link by replying to email where you got the assignments.
 - Final merge
+- Test merge
