@@ -18,7 +18,3 @@ Github Action Workflow Assignment
     - When PR get merged in main/master branch from any other branch.
     - When commit message contains `BUILD_CONTAINER_IMAGE` string.
 - Share the github repo link by replying to email where you got the assignments.
-- Build image
-- OK
-- New
-- - pull
