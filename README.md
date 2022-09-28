@@ -16,5 +16,6 @@ Github Action Workflow Assignment
 - Prevent merging anything in main branch without review.
 - Build container image only when one of the below conditions is true:
     - When PR get merged in main/master branch from any other branch.
-    - When commit message contains `BUILD_CONTAINER_IMAGE` string
+    - When commit message contains `BUILD_CONTAINER_IMAGE` string.
 - Share the github repo link by replying to email where you got the assignments.
+- TEst merge
