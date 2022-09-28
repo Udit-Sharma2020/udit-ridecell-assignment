@@ -46,5 +46,7 @@ jobs:
         gcloud config set compute/zone us-east4-a
         gcloud container clusters get-credentials ${{ env.CLUSTER_NAME }} --region us-east4-a --project "${{ env.GCP_PROJECT }}"
         
+
      # #kubectl create deployment ${{ env.DEPLOYMENT_NAME }} --image ${{ env.IMAGE_NAME }}:${GITHUB_SHA_SHORT} -n ${{ env.NAMESPACE }}
+
       
