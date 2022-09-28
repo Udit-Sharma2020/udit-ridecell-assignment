@@ -1,8 +1,11 @@
 name: Build, Push Docker Image
+
 on:
   pull_request:
     branches:
     - master
+    types: [closed]
+    
 env: 
   IMAGE_NAME: tech4mud/udit-ridecell-image
   GCP_PROJECT: gridcamp-studio #ridecell-project
@@ -16,7 +19,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build and push Docker image
-      if: contains(github.event.head_commit.message, 'BUILD_CONTAINER_IMAGE')
+      if: contains("${{ github.event.head_commit.message }}", 'BUILD_CONTAINER_IMAGE')
       run: | 
         echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u tech4mud --password-stdin
         export GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-4)
@@ -37,7 +40,7 @@ jobs:
         name: "gcp-key.json"
         json: ${{ secrets.GCP_SA_KEY }}
     - name: Deploy On GKE
-      if: contains(github.event.head_commit.message, 'BUILD_CONTAINER_IMAGE')
+      if: contains("${{ github.event.head_commit.message }}", 'BUILD_CONTAINER_IMAGE')
     #this can be done using a custom helm chart but i'll use a simple kubectl deployment command. "${{ secrets.GCP_SA_KEY }}" 
       run: | 
         export GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-4)
