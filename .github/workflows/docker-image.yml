@@ -1,9 +1,13 @@
 name: Build, Push Docker Image
 on:
-  pull_request:
+  push:
     branches:
-    - master
-    types: [closed]
+      - master
+# on:
+#   pull_request:
+#     branches:
+#     - master
+#     types: [closed]
 env: 
   IMAGE_NAME: tech4mud/udit-ridecell-image
   GCP_PROJECT: gridcamp-studio #ridecell-project
