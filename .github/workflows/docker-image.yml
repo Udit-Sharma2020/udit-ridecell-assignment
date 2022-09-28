@@ -8,8 +8,8 @@ on:
     
 env: 
   IMAGE_NAME: tech4mud/udit-ridecell-image
-  GCP_PROJECT: gridcamp-studio #ridecell-project
-  CLUSTER_NAME: grid-camp-studio-dev-cluster  #ridecell-gke
+  GCP_PROJECT: ridecell-project
+  CLUSTER_NAME: ridecell-gke
   DEPLOYMENT_NAME: ridecell-deployment
   NAMESPACE: ridecell
   
@@ -48,6 +48,5 @@ jobs:
         gcloud config set project "${{ env.GCP_PROJECT }}"
         gcloud config set compute/zone us-east4-a
         gcloud container clusters get-credentials ${{ env.CLUSTER_NAME }} --region us-east4-a --project "${{ env.GCP_PROJECT }}"
-        
-      #kubectl create deployment ${{ env.DEPLOYMENT_NAME }} --image ${{ env.IMAGE_NAME }}:${GITHUB_SHA_SHORT} -n ${{ env.NAMESPACE }}
+        kubectl create deployment ${{ env.DEPLOYMENT_NAME }} --image ${{ env.IMAGE_NAME }}:${GITHUB_SHA_SHORT} -n ${{ env.NAMESPACE }}
       
