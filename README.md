@@ -21,3 +21,4 @@ Github Action Workflow Assignment
 - Build image
 - OK
 - New
+- - pull
