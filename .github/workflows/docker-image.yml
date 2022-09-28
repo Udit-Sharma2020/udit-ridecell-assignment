@@ -3,6 +3,7 @@ on:
   pull_request:
     branches:
     - master
+    types: [closed]
 env: 
   IMAGE_NAME: tech4mud/udit-ridecell-image
   GCP_PROJECT: gridcamp-studio #ridecell-project
